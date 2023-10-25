@@ -1,6 +1,44 @@
-var userClickedPattern = [];
-var gamePattern = [];
+var level=0;
+var started = false;
+var userClickedPattern = ["1"];
+var gamePattern = ["1"];
 var buttonColours = ["red", "blue", "green", "yellow"]
+
+
+for(var i = 0; i<gamePattern.length+1; i++){
+    if(userClickedPattern[i] === gamePattern[i]){
+//btn clicks------------------------------------------------------->
+        $(".btn").on("click", function(){
+            var userChosenColor = $(this).attr("id");
+            userClickedPattern.push(userChosenColor);
+
+            playSound($(this).attr("id"));
+            started = false;
+
+        });
+        $(".btn").click(activateAnimation);
+
+//----------------------------------------------------------------->
+    }
+    else{
+        break;
+    }
+}
+
+
+$(document).on("keypress", function(){
+    if(!started){
+        nextSequence();
+        level++;
+        $("#level-title").text("Level "+level);
+        started = true;
+    }
+})
+
+  
+
+
+
 
 function nextSequence(){
     var randomNumber = Math.floor(Math.random()*4);
@@ -12,20 +50,6 @@ function nextSequence(){
    
     playSound(randomChosenColour)
 }
-
-//btn clicks------------------------------------------------------->
-$(".btn").on("click", function(){
-    var userChosenColor = $(this).attr("id");
-    userClickedPattern.push(userChosenColor);
-});
-$(".btn").on("click", activateAnimation);
-$(".btn").on("click", function (){
-    playSound($(this).attr("id"));
-});
-//----------------------------------------------------------------->
-
-
-
 
 
 function playSound(name){
@@ -40,3 +64,13 @@ function activateAnimation(){
         $(this).removeClass("pressed");
     }, 5);
 }
+
+
+
+
+
+
+
+
+
+
